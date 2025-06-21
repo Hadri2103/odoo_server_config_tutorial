@@ -77,7 +77,7 @@ Copy/paste
 ```
 [options]
 ; This is the password that allows database operations:
-admin_passwd = admin # To change ofc
+admin_passwd = admin
 db_host = localhost
 db_port = 5432
 db_user = odoo18
