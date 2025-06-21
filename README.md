@@ -22,6 +22,7 @@ sudo apt-get install -y npm
 sudo ln -s /usr/bin/nodejs /usr/bin/node
 sudo npm install -g less less-plugin-clean-css
 sudo apt-get install -y node-less
+sudo reboot
 ```
 Setup the database
 ```
