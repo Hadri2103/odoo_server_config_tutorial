@@ -104,7 +104,7 @@ Documentation=http://www.odoo.com
 # Ubuntu/Debian convention:
 Type=simple
 User=odoo18
-ExecStart=/opt/odoo18/venv/bin/python3.12 /opt/odoo18/odoo-bin -c /etc/odoo18.conf
+ExecStart=/opt/odoo18/venv/bin/python3.10 /opt/odoo18/odoo-bin -c /etc/odoo18.conf
 [Install]
 WantedBy=default.target
 ```
