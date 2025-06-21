@@ -3,11 +3,107 @@ Video tutorial linked to this note : LINK
 
 ## Create a DigitalOcean droplet
 Setup parameters :
-- Ubuntu 24.10 x64
+- Ubuntu 22.04 (LTS) x64
 - Basic plan
 - Regular SSD
 - 6$/month offer
 
 ## Server setup and installing Odoo 18
 Launch the server console
-``` code test ```
+Update the server
+```
+sudo apt-get update
+```
+Install python and all needed libraries
+```
+sudo apt-get install -y python3-pip
+sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev libmysqlclient-dev libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev
+sudo apt-get install -y npm
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+sudo npm install -g less less-plugin-clean-css
+sudo apt-get install -y node-less
+```
+Setup the database
+```
+sudo apt-get install -y postgresql
+sudo su - postgres
+createuser --createdb --username postgres --no-createrole --superuser --pwprompt odoo18
+exit
+```
+System user for Odoo 18
+```
+sudo adduser --system --home=/opt/odoo18 --group odoo18
+```
+Get Odoo 18 from git
+```
+sudo apt-get install -y git
+sudo su - odoo18 -s /bin/bash
+git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch .
+exit
+```
+Install required python packages
+```
+sudo apt install -y python3-venv
+sudo python3 -m venv /opt/odoo18/venv
+sudo -s
+cd /opt/odoo18/
+source venv/bin/activate
+pip install -r requirements.txt
+sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+sudo wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+sudo apt-get install -y xfonts-75dpi
+sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
+sudo apt install -f
+deactivate
+```
+Setup the configuration file
+```
+sudo cp /opt/odoo18/debian/odoo.conf /etc/odoo18.conf
+sudo nano /etc/odoo18.conf
+```
+Copy/paste
+```
+[options]
+; This is the password that allows database operations:
+admin_passwd = admin # To change ofc
+db_host = localhost
+db_port = 5432
+db_user = odoo18
+db_password = odoo18
+addons_path = /opt/odoo18/addons
+default_productivity_apps = True
+logfile = /var/log/odoo/odoo18.log
+workers = 4
+```
+Give needed permissions 
+```
+sudo chown odoo18: /etc/odoo18.conf
+sudo chmod 640 /etc/odoo18.conf
+sudo mkdir /var/log/odoo
+sudo chown odoo18:root /var/log/odoo
+```
+Setup service file
+```
+sudo nano /etc/systemd/system/odoo18.service
+```
+Copy/paste
+```
+[Unit]
+Description=Odoo18
+Documentation=http://www.odoo.com
+[Service]
+# Ubuntu/Debian convention:
+Type=simple
+User=odoo18
+ExecStart=/opt/odoo18/venv/bin/python3.12 /opt/odoo18/odoo-bin -c /etc/odoo18.conf
+[Install]
+WantedBy=default.target
+```
+Give needed permissions
+```
+sudo chmod 755 /etc/systemd/system/odoo18.service
+sudo chown root: /etc/systemd/system/odoo18.service
+sudo systemctl start odoo18.service
+```
+
