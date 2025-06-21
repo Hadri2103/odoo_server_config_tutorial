@@ -52,9 +52,9 @@ source venv/bin/activate
 sudo apt-get install python3-dev build-essential libevent-dev libssl-dev
 pip install --upgrade pip setuptools wheel
 nano requirements.txt
-```
+
 Modify gevent and greelet requiremnts from > 3.10 to >= 3.10
-```
+
 pip install -r requirements.txt
 sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
 sudo wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
