@@ -29,6 +29,9 @@ Setup the database
 sudo apt-get install -y postgresql
 sudo su - postgres
 createuser --createdb --username postgres --no-createrole --superuser --pwprompt odoo18
+
+Set database password as odoo18
+
 exit
 ```
 System user for Odoo 18
