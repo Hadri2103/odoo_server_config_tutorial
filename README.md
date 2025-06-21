@@ -60,6 +60,7 @@ sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wk
 sudo wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo apt-get install -y xfonts-75dpi
+sudo apt-get install -f xfonts-base xfonts-75dpi
 sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
 sudo apt install -f
 deactivate
