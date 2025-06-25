@@ -117,8 +117,10 @@ sudo chmod 755 /etc/systemd/system/odoo18.service
 sudo chown root: /etc/systemd/system/odoo18.service
 ```
 
+
 > Droplet Snaphot Name : *250625-Odoo18_ServerSetup*
 
+### Usage
 You now have a working version of Odoo 18 that you can access at ```http://<your_IP_address>:8069```
 Print log file in real-time : ```sudo tail -f /var/log/odoo/odoo18.log```
 Start/stop/restart Odoo :
@@ -205,6 +207,7 @@ Add at the end of the file
 proxy_mode=True
 ```
 
+
 > Droplet Snaphot Name : *250625-Odoo18_ServerWithNGINX*
 >
 > IP in NGINX config file needs to be adapted to server IP (line 11)
@@ -213,6 +216,8 @@ proxy_mode=True
 > 
 > sudo nano /etc/nginx/sites-enabled/odoo18.conf
 
+
+### Usage
 Restart Odoo and NGINX and test your ip
 ```
 cd
@@ -226,7 +231,6 @@ You now have NGINX setup. You can access your working version of Odoo at ```http
 See nginx log in real-time : ```sudo tail -f /var/log/nginx/access.log```
 
 Continue now with domain name setup or database creation.
-
 
 
 ## Database creation
