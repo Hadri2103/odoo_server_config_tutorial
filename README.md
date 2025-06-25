@@ -129,8 +129,8 @@ sudo systemctl restart odoo18.service
 sudo systemctl stop odoo18.service
 ```
 
-## Database creation and modules install
-Connect to Odoo at ```http://<your_IP_address>:8069```.
+## Database creation
+Connect to your Odoo server (```http://<your_IP_address>:8069``` or ```http://<your_IP_address>``` or ```http://<your_domain>```)
 Setup the following informations :
 | Field | Description |
 | -------- | ------- |
