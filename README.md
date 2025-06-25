@@ -129,9 +129,12 @@ sudo systemctl stop odoo18.service
 ## Database creation and modules install
 Connect to Odoo at ```http://<your_IP_address>:8069```.
 Setup the following informations :
-| January | $250 |
+| Field | Description |
+| -------- | ------- |
+| Test | $250 |
 | February | $80 |
 | March | $420 |
+
 
 
 
