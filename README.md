@@ -115,18 +115,19 @@ Give needed permissions
 ```
 sudo chmod 755 /etc/systemd/system/odoo18.service
 sudo chown root: /etc/systemd/system/odoo18.service
-sudo systemctl start odoo18.service
 ```
+
+> Droplet Snaphot Name : TODO
+
 You now have a working version of Odoo 18 that you can access at ```http://<your_IP_address>:8069```
 Print log file in real-time : ```sudo tail -f /var/log/odoo/odoo18.log```
 Start/stop/restart Odoo :
 ```
+sudo systemctl start odoo18.service
 sudo systemctl enable odoo18.service
 sudo systemctl restart odoo18.service
 sudo systemctl stop odoo18.service
 ```
-
-> Droplet Snaphot Name : TODO
 
 ## Database creation and modules install
 Connect to Odoo at ```http://<your_IP_address>:8069```.
