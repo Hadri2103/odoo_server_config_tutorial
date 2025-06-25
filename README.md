@@ -128,6 +128,100 @@ sudo systemctl enable odoo18.service
 sudo systemctl restart odoo18.service
 sudo systemctl stop odoo18.service
 ```
+Continue now with NGINX setup or database creation.
+
+## NGINX
+Install NGINX
+```
+sudo apt install nginx -y
+cd /etc/nginx/sites-available/
+rm -rf default
+sudo nano odoo18.conf
+```
+Create NGINX config file. Copy/paste.
+```
+#odoo server
+upstream odoo {
+server 127.0.0.1:8069;
+}
+upstream odoochat {
+server 127.0.0.1:8072;
+}
+
+server {
+listen 80;
+server_name yourip; #DOMAIN NAME OR IP ADDRESS WITHOUT HTTP
+
+proxy_read_timeout 720s;
+proxy_connect_timeout 720s;
+proxy_send_timeout 720s;
+
+
+# Add Headers for odoo proxy mode
+proxy_set_header X-Forwarded-Host $host;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+proxy_set_header X-Real-IP $remote_addr;
+
+# log
+access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+
+# Redirect requests to odoo backend server
+location / {
+proxy_redirect off;
+proxy_pass http://odoo;
+}
+location /longpolling {
+proxy_pass http://odoochat;
+}
+
+# common gzip
+gzip_types text/css text/less text/plain text/xml application/xml application/json application/javascript;
+gzip on;
+
+client_body_in_file_only clean;
+client_body_buffer_size 32K;
+client_max_body_size 500M;
+sendfile on;
+send_timeout 600s;
+keepalive_timeout 300;
+}
+```
+Add to enabled sites
+```
+sudo ln -s /etc/nginx/sites-available/odoo18.conf /etc/nginx/sites-enabled/odoo18.conf
+cd ..
+cd sites-enabled/
+rm -rf default
+sudo nginx -t
+```
+Tell Odoo you have NGINX enabled and enable proxy mode
+```
+sudo nano /etc/odoo18.conf
+```
+Add at the end of the file
+```
+proxy_mode=True
+```
+
+> Droplet Snaphot Name : TODO
+
+Restart Odoo and NGINX and test your ip
+```
+cd
+sudo service nginx stop
+sudo service nginx start
+sudo systemctl restart odoo18.service
+```
+
+You now have NGINX setup. You can access your working version of Odoo at ```http://<your_IP_address>```
+
+See nginx log in real-time : ```sudo tail -f /var/log/nginx/access.log```
+
+Continue now with domain name setup or database creation.
+
+
 
 ## Database creation
 Connect to your Odoo server (```http://<your_IP_address>:8069``` or ```http://<your_IP_address>``` or ```http://<your_domain>```)
