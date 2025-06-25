@@ -131,9 +131,17 @@ Connect to Odoo at ```http://<your_IP_address>:8069```.
 Setup the following informations :
 | Field | Description |
 | -------- | ------- |
-| Test | $250 |
-| February | $80 |
-| March | $420 |
+| Master Password | Database master password, choose carefully and write it down |
+| Database Name | Something like 'projectname_db' works well |
+| Email | Your email for future connexions |
+| Password | Your password for future connexions |
+| Phone Number | Your phone number |
+| Language | Better use english for setup process |
+| Country | The country in which the Odoo instance will operate |
+
+Then, connect to the Odoo instance.
+
+
 
 
 
