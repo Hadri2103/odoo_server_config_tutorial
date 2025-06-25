@@ -205,7 +205,13 @@ Add at the end of the file
 proxy_mode=True
 ```
 
-> Droplet Snaphot Name : TODO
+> Droplet Snaphot Name : *250625-Odoo18_ServerWithNGINX*
+>
+> IP in NGINX config file needs to be adapted to server IP
+> sudo nano /etc/nginx/sites-available/odoo18.conf
+> sudo nano /etc/nginx/sites-enabled/odoo18.conf
+>
+> IP is in line 11
 
 Restart Odoo and NGINX and test your ip
 ```
