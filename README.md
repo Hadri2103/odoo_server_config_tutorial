@@ -210,7 +210,7 @@ proxy_mode=True
 
 > Droplet Snaphot Name : *250625-Odoo18_ServerWithNGINX*
 >
-> IP in NGINX config file needs to be adapted to server IP (line 11)
+> IP in NGINX config file needs to be adapted to Droplet IPV4 (line 11)
 > 
 > sudo nano /etc/nginx/sites-available/odoo18.conf
 > 
