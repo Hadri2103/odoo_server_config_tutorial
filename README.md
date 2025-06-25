@@ -126,6 +126,8 @@ sudo systemctl restart odoo18.service
 sudo systemctl stop odoo18.service
 ```
 
+== Droplet Snaphot Name : TODO ==
+
 ## Database creation and modules install
 Connect to Odoo at ```http://<your_IP_address>:8069```.
 Setup the following informations :
