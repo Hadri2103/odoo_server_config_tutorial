@@ -117,7 +117,7 @@ sudo chmod 755 /etc/systemd/system/odoo18.service
 sudo chown root: /etc/systemd/system/odoo18.service
 ```
 
-> Droplet Snaphot Name : TODO
+> Droplet Snaphot Name : *250625-Odoo18_ServerSetup*
 
 You now have a working version of Odoo 18 that you can access at ```http://<your_IP_address>:8069```
 Print log file in real-time : ```sudo tail -f /var/log/odoo/odoo18.log```
