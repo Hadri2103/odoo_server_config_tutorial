@@ -59,6 +59,7 @@ nano requirements.txt
 Modify gevent and greelet requiremnts from > 3.10 to >= 3.10
 
 pip install -r requirements.txt
+pip install phonenumbers
 sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
 sudo wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
@@ -85,7 +86,6 @@ db_password = odoo18
 addons_path = /opt/odoo18/addons
 default_productivity_apps = True
 logfile = /var/log/odoo/odoo18.log
-workers = 4
 ```
 Give needed permissions 
 ```
