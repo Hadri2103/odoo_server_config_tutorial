@@ -355,6 +355,12 @@ sudo service nginx start
 sudo systemctl restart odoo18.service
 ```
 
+# Odoo18 instance setup
+Always follow the log output while setting up
+```
+sudo tail -f /var/log/odoo/odoo18.log
+```
+
 
 ## Database creation
 Connect to your Odoo server (```http://<your_IP_address>:8069``` or ```http://<your_IP_address>``` or ```http://<your_domain>```)
