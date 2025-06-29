@@ -356,9 +356,6 @@ sudo systemctl restart odoo18.service
 ```
 
 
-
-
-
 ## Database creation
 Connect to your Odoo server (```http://<your_IP_address>:8069``` or ```http://<your_IP_address>``` or ```http://<your_domain>```)
 Setup the following informations :
@@ -375,7 +372,9 @@ Setup the following informations :
 Then, connect to the Odoo instance.
 
 ## Install apps
-Install the needed Odoo apps for your usecase
+Install the needed Odoo apps for your usecase.
+
+If your Odoo instance will have a website, always start with this app first. It will install other needed apps.
 
 ## Mail server setup
 test
