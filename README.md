@@ -374,6 +374,12 @@ Setup the following informations :
 
 Then, connect to the Odoo instance.
 
+## Install apps
+Install the needed Odoo apps for your usecase
+
+## Mail server setup
+test
+
 
 
 
