@@ -383,7 +383,7 @@ Install the needed Odoo apps for your usecase.
 If your Odoo instance will have a website, always start with this app first. It will install other needed apps.
 
 ## Base configuration
-TODO on the website as well as write here (icon, users, ect)
+Invite users, add languages, rename company and website.
 
 ## Mail server setup
 test
