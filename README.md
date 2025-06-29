@@ -232,6 +232,104 @@ See nginx log in real-time : ```sudo tail -f /var/log/nginx/access.log```
 
 Continue now with domain name setup or database creation.
 
+## Domain name setup
+First, you need to buy your domain name (for example on Squarespace).
+
+When that is done, connect to Cloudflare and setup a new domain name :
+- Always select the recommended and free options/plans
+- Turn off DNSSEC and replace nameservers on your DNS provider side (Squarespace). This takes up to 24h to update and you will receive an email once it's done.
+
+On Cloudflare DNS dashboard :
+- Change the A record to add the ipv4 of your server.
+- Change the CNAME www record to add your domain name.
+- Delete the other CNAME record, you only need one.
+
+Delete the previous NGINX setup.
+```
+cd /etc/nginx/sites-available/
+rm -rf odoo18.conf
+cd ..
+cd sites-enabled/
+rm -rf odoo18.conf
+cd ..
+cd sites-available/
+sudo nano odoo18.conf
+```
+
+Copy/paste.
+```
+server {
+    listen 80;
+    server_name mywebsite.com www.mywebsite.com;
+    return 301 https://$host$request_uri;  # Force HTTPS
+}
+
+server {
+    listen 443 ssl http2;
+    server_name mywebsite.com www.mywebsite.com;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
+
+    proxy_read_timeout 720s;
+    proxy_connect_timeout 720s;
+    proxy_send_timeout 720s;
+
+    # Cloudflare Origin Certificate
+    ssl_certificate /etc/ssl/cloudflare/origin.crt;
+    ssl_certificate_key /etc/ssl/cloudflare/origin.key;
+
+    # SSL Settings (Recommended by Cloudflare)
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
+
+    # Cloudflare IP Forwarding (3 needed)
+    set_real_ip_from 192.168.1.0/24;
+    real_ip_header CF-Connecting-IP;
+
+    location / {
+        proxy_pass http://127.0.0.1:8069;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    location /longpolling {
+        proxy_pass http://127.0.0.1:8072;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+    
+    # Performance
+    gzip_types text/css text/less text/plain text/xml application/xml application/json application/javascript;
+		gzip on;
+		client_max_body_size 100M;
+}
+```
+Multiple sections need to be adapted to your specific usecase :
+- test
+
+
+Turn on NGINX and Odoo.
+```
+sudo service nginx stop
+sudo service nginx start
+sudo systemctl restart odoo18.service
+```
+
+
+
+
+
+
+
+
+
+
 
 ## Database creation
 Connect to your Odoo server (```http://<your_IP_address>:8069``` or ```http://<your_IP_address>``` or ```http://<your_domain>```)
