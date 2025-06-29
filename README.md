@@ -244,6 +244,19 @@ On Cloudflare DNS dashboard :
 - Change the CNAME www record to add your domain name.
 - Delete the other CNAME record, you only need one.
 
+Create location for SSL/TLS certificates on your server
+```
+cd /etc/ssl/
+mkdir cloudflare
+cd cloudflare
+```
+
+SSL/TLS :
+- Change the encyption to Custom SSL/TLS > Full
+- In origin server tab, create Origin Certificate. Leave default settings.
+- ```sudo nano origin.crt``` and copy origin certificate
+- ```sudo nano origin.key``` and copy key certificate
+
 Delete the previous NGINX setup.
 ```
 cd /etc/nginx/sites-available/
@@ -256,7 +269,7 @@ cd sites-available/
 sudo nano odoo18.conf
 ```
 
-Copy/paste.
+Copy/paste
 ```
 server {
     listen 80;
@@ -285,7 +298,7 @@ server {
     ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
 
     # Cloudflare IP Forwarding (3 needed)
-    set_real_ip_from 192.168.1.0/24;
+    set_real_ip_from SEE CLOUDFLARE IP RANGES;
     real_ip_header CF-Connecting-IP;
 
     location / {
@@ -310,9 +323,30 @@ server {
 		client_max_body_size 100M;
 }
 ```
-Multiple sections need to be adapted to your specific usecase :
-- test
+Don't forget to 
+- Change the generic domain name to your domain name (4 occurences in two locations).
+- To add Cloudflare's ip ranges : https://www.cloudflare.com/ips/ 
 
+Add to enabled sites
+```
+sudo ln -s /etc/nginx/sites-available/odoo18.conf /etc/nginx/sites-enabled/odoo18.conf
+cd
+sudo nginx -t
+```
+
+Edit Odoo config file
+```
+sudo nano /etc/odoo18.conf
+```
+Add at the end of the file
+```
+x_forwarded_for = True
+```
+
+> No official snaphots for this section and the nexts since we entered domain-specific setup.
+
+
+### Usage
 
 Turn on NGINX and Odoo.
 ```
