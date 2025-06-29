@@ -343,7 +343,7 @@ Add at the end of the file
 x_forwarded_for = True
 ```
 
-> No official snaphots for this section and the nexts since we entered domain-specific setup.
+> No official snaphots for next sections since we entered domain-specific setup.
 
 
 ### Usage
@@ -354,12 +354,6 @@ sudo service nginx stop
 sudo service nginx start
 sudo systemctl restart odoo18.service
 ```
-
-
-
-
-
-
 
 
 
