@@ -386,7 +386,32 @@ If your Odoo instance will have a website, always start with this app first. It 
 Invite users, add languages, rename company and website.
 
 ## Mail server setup
-test
+First, receiing emails. 
+Create email routing on cloudflare and delete and add whatever DNS records they say you need to
+
+
+Then, for outbounds emails, create a elastic email account. Setup a domain name on yourdomain.com
+Go to cloudflare DNS
+
+ADD include:_spf.elasticemail.com into SPF (TXT) record (to have something like "v=spf1 include:_spf.mx.cloudflare.net include:_spf.elasticemail.com ~all"
+
+Ne rien faire pour le reste (DMARK DCIM et autres CNAME)
+
+Mettre oubound par défault qqch comme notification@yourdomain.com
+
+Ensuite, créer une connection SMTP.
+
+username : notification@myfinanceamapper.com
+pass : given by Elastic Email
+Port : 2525
+
+And that's it!
+
+
+
+
+
+
 
 
 
