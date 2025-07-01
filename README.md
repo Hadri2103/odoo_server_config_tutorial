@@ -408,7 +408,34 @@ Port : 2525
 And that's it!
 
 
+------
+DO I need an alias email domain or not? not sure.... how to know. No SE
+Technical > Aliases domain : myfinancemapper.com bounce, catchall, notification
 
+------
+nginx conf setup add
+
+sudo systemctl restart nginx
+proxy_set_header X-Forwarded-Host $host;         
+proxy_set_header X-Forwarded-Port $server_port; 
+
+
+-------
+nginx http conf setup (add in http)
+
+sudo nano /etc/nginx/nginx.conf
+
+proxy_headers_hash_max_size 1024;
+proxy_headers_hash_bucket_size 128;
+
+
+---------
+
+Big failure. I will keep using mailgun but I will keep this for later. I need to first get a few clients before putting 35$ a month on a mailgun payed plan for my clients. 
+
+I also need to look into sending from mail.myfinancemapper.com and not the bare domain.
+
+This section will then be for later! I can still put the information about the redirection no? 
 
 
 
