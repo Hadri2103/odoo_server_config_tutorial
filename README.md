@@ -437,6 +437,7 @@ I also need to look into sending from mail.myfinancemapper.com and not the bare 
 
 This section will then be for later! I can still put the information about the redirection no? 
 
+Keep the informations above into a kind of graveyard?
 
 
 
