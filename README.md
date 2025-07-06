@@ -386,6 +386,10 @@ If your Odoo instance will have a website, always start with this app first. It 
 Invite users, add languages, rename company and website.
 
 ## Mail server setup
+
+### Email redirection
+In case you only want to receive emails, setup an email redirection on Cloudflare directly. Create email routing and delete and a
+
 First, receiing emails. 
 Create email routing on cloudflare and delete and add whatever DNS records they say you need to
 
