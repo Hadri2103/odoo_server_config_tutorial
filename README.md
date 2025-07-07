@@ -223,6 +223,7 @@ Restart Odoo and NGINX and test your ip
 cd
 sudo service nginx stop
 sudo service nginx start
+sudo systemctl restart nginx
 sudo systemctl restart odoo18.service
 ```
 
@@ -307,6 +308,8 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
+	proxy_set_header X-Forwarded-Host $host;         
+	proxy_set_header X-Forwarded-Port $server_port; 
     }
     
     location /longpolling {
@@ -334,6 +337,16 @@ cd
 sudo nginx -t
 ```
 
+Modify NGINX core config
+```
+sudo nano /etc/nginx/nginx.conf
+```
+Add in http block
+```
+proxy_headers_hash_max_size 1024;
+proxy_headers_hash_bucket_size 128;
+```
+
 Edit Odoo config file
 ```
 sudo nano /etc/odoo18.conf
@@ -352,6 +365,7 @@ Turn on NGINX and Odoo.
 ```
 sudo service nginx stop
 sudo service nginx start
+sudo systemctl restart nginx
 sudo systemctl restart odoo18.service
 ```
 
@@ -388,11 +402,9 @@ Invite users, add languages, rename company and website.
 ## Mail server setup
 
 ### Email redirection
-In case you only want to receive emails, setup an email redirection on Cloudflare directly. Create email routing and delete and a
+In case you only want to receive emails, setup an email redirection on Cloudflare directly. Create email routing and delete and whatever DNS records they say you need to.
 
-First, receiing emails. 
-Create email routing on cloudflare and delete and add whatever DNS records they say you need to
-
+### Outbound emails - DRAFT & GRAVEYARD
 
 Then, for outbounds emails, create a elastic email account. Setup a domain name on yourdomain.com
 Go to cloudflare DNS
@@ -411,31 +423,13 @@ Port : 2525
 
 And that's it!
 
-
 ------
 DO I need an alias email domain or not? not sure.... how to know. No SE
 Technical > Aliases domain : myfinancemapper.com bounce, catchall, notification
 
 ------
-nginx conf setup add
 
-sudo systemctl restart nginx
-proxy_set_header X-Forwarded-Host $host;         
-proxy_set_header X-Forwarded-Port $server_port; 
-
-
--------
-nginx http conf setup (add in http)
-
-sudo nano /etc/nginx/nginx.conf
-
-proxy_headers_hash_max_size 1024;
-proxy_headers_hash_bucket_size 128;
-
-
----------
-
-Big failure. I will keep using mailgun but I will keep this for later. I need to first get a few clients before putting 35$ a month on a mailgun payed plan for my clients. 
+Big failure. I will keep using MAILGUN but I will keep this for later. I need to first get a few clients before putting 35$ a month on a mailgun payed plan for my clients. 
 
 I also need to look into sending from mail.myfinancemapper.com and not the bare domain.
 
