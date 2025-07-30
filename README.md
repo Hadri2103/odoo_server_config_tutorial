@@ -8,6 +8,46 @@ Setup parameters :
 - Regular SSD
 - 6$/month offer
 
+## Test
+```
+sudo apt-get update
+sudo apt install postgresql -y
+
+cd tmp
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+cd ..
+sudo apt install /tmp/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+
+wget -q -O - https://nightly.odoo.com/odoo.key | sudo gpg --dearmor -o /usr/share/keyrings/odoo-archive-keyring.gpg
+echo 'deb [signed-by=/usr/share/keyrings/odoo-archive-keyring.gpg] https://nightly.odoo.com/18.0/nightly/deb/ ./' | sudo tee /etc/apt/sources.list.d/odoo.list
+sudo apt-get update && sudo apt-get install odoo
+
+sudo mkdir -p /opt/odoo/custom-addons
+sudo chown -R odoo:odoo /opt/odoo/custom-addons
+
+sudo mkdir -p /var/log/odoo
+sudo chown odoo:odoo /var/log/odoo
+
+sudo -u postgres psql -c "ALTER USER odoo WITH PASSWORD 'odoo';"
+sudo nano /etc/odoo/odoo.conf
+
+
+[options]
+; This is the password that allows database operations:
+admin_passwd = admin
+db_host = localhost
+db_port = 5432
+db_user = odoo
+db_password = odoo
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/opt/odoo/custom-addons
+default_productivity_apps = True
+logfile = /var/log/odoo/odoo.log
+
+
+
+
+```
+
 ## Server setup and installing Odoo 18
 Launch the server console
 Update the server
