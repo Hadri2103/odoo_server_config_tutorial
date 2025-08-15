@@ -213,13 +213,11 @@ SSL/TLS :
 Delete the previous NGINX setup.
 ```
 cd /etc/nginx/sites-available/
-rm -rf odoo18.conf
-cd ..
-cd sites-enabled/
-rm -rf odoo18.conf
-cd ..
-cd sites-available/
-sudo nano odoo18.conf
+rm -rf odoo.conf
+cd /etc/nginx/sites-enabled/
+rm -rf odoo.conf
+cd /etc/nginx/sites-available/
+sudo nano odoo.conf
 ```
 
 Copy/paste
@@ -284,7 +282,7 @@ Don't forget to
 
 Add to enabled sites
 ```
-sudo ln -s /etc/nginx/sites-available/odoo18.conf /etc/nginx/sites-enabled/odoo18.conf
+sudo ln -s /etc/nginx/sites-available/odoo.conf /etc/nginx/sites-enabled/odoo.conf
 cd
 sudo nginx -t
 ```
@@ -301,7 +299,7 @@ proxy_headers_hash_bucket_size 128;
 
 Edit Odoo config file
 ```
-sudo nano /etc/odoo18.conf
+sudo nano /etc/odoo/odoo.conf
 ```
 Add at the end of the file
 ```
@@ -318,13 +316,13 @@ Turn on NGINX and Odoo.
 sudo service nginx stop
 sudo service nginx start
 sudo systemctl restart nginx
-sudo systemctl restart odoo18.service
+sudo systemctl restart odoo
 ```
 
 # Odoo18 instance setup
 Always follow the log output while setting up
 ```
-sudo tail -f /var/log/odoo/odoo18.log
+sudo tail -f /var/log/odoo/odoo-server.log
 ```
 
 
