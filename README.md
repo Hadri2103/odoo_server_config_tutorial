@@ -17,14 +17,20 @@ Update droplet and install Posrgres
 ```
 sudo apt-get update
 sudo apt install postgresql -y
+sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev \
+    libsasl2-dev libldap2-dev build-essential libssl-dev libffi-dev \
+    libmysqlclient-dev libjpeg-dev libpq-dev libjpeg8-dev liblcms2-dev \
+    libblas-dev libatlas-base-dev libpng-dev libtiff5-dev libwebp-dev \
+    libharfbuzz-dev libfribidi-dev libxcb1-dev
 ```
+
 Install wkhtmltopdf
 ```
-cd ..
-cd tmp
-wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
-cd ..
-sudo apt install /tmp/wkhtmltox_0.12.6.1-3.jammy_amd64.deb
+cd /tmp
+wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+sudo apt install -f ./wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+cd ~
+
 ```
 Install Odoo from package installer
 ```
@@ -44,17 +50,17 @@ sudo chown odoo:odoo /var/log/odoo
 sudo chown -R odoo:odoo /var/lib/odoo
 sudo find /var/lib/odoo -type d -exec chmod 755 {} \;
 sudo find /var/lib/odoo -type f -exec chmod 644 {} \;
-sudo chmod -R 775 /var/lib/odoo/.local/share/Odoo/filestore
+sudo chmod -R 750 /var/lib/odoo/.local/share/Odoo/filestore
 ```
 Change postgres password for odoo
 ```
-sudo -u postgres psql -c "ALTER USER odoo WITH PASSWORD 'odoo';"
+sudo -u postgres psql -c "ALTER USER odoo WITH PASSWORD 'strong_user_password';"
 ```
 Setup config file
 ```
 sudo nano /etc/odoo/odoo.conf
 ```
-Copy/paste
+Copy/paste & change odoo user password
 ```
 [options]
 ; This is the password that allows database operations:
@@ -62,7 +68,7 @@ admin_passwd = admin
 db_host = localhost
 db_port = 5432
 db_user = odoo
-db_password = odoo
+db_password = strong_user_password
 addons_path = /usr/lib/python3/dist-packages/odoo/addons,/opt/odoo/custom-addons
 default_productivity_apps = True
 logfile = /var/log/odoo/odoo-server.log
@@ -340,6 +346,16 @@ Setup the following informations :
 | Country | The country in which the Odoo instance will operate |
 
 Then, connect to the Odoo instance.
+
+Edit Odoo config file
+```
+sudo nano /etc/odoo/odoo.conf
+```
+Add at the end of the file (for single database setup) --> possible to make it domain name based for multi-database setup
+```
+dbfilter = ^your_client_database_name$
+list_db = False
+```
 
 ## Install apps
 Install the needed Odoo apps for your usecase.
